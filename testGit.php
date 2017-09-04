@@ -7,7 +7,8 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <?php echo "Andres Macias?>
+        <?php echo "Andres Macias" ?>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure, odio atque reiciendis eum, eaque suscipit deserunt obcaecati laborum molestias est expedita rem vitae, alias architecto placeat perferendis libero neque in?</p>
     
     </body>
 </html>
