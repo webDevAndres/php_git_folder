@@ -7,7 +7,7 @@
 	foreach($_POST as $key => $value)		//This will loop through each name-value in the $_POST array
 	{
 		$tableBody .= "<tr>";				//formats beginning of the row
-		$tableBody .= "<td>$key</td>";		//dsiplay the name of the name-value pair from the form
+		$tableBody .= "<td>$key</td>";		//display the name of the name-value pair from the form
 		$tableBody .= "<td>$value</td>";	//dispaly the value of the name-value pair from the form
 		$tableBody .= "</tr>";				//End this row
 	} 
@@ -21,7 +21,10 @@
 	$inSchool = $_POST["school"];			//Get the value entered in the school field
 	$inGender = $_POST["gender"];			//Get the value entered in the gender radio button
 	$inGraduationYear = $_POST["graduationYear"];	//Get the value entered in the graduation year dropdown
-	$inattending = $_POST["attending"];				//Get the value entered in the attending checkbox
+	$inInterests1 = $_POST["interests1"];				//Get the value(s) entered in the interests checkbox
+	$inInterests2 = $_POST["interests2"];
+	$inInterests3 = $_POST["interests3"];
+	$inInterests4 = $_POST["interests4"];
 		
 
 ?>
@@ -52,7 +55,11 @@
 <p>Last Name: <?php echo $inLastName; ?></p>
 <p>Gender: <?php echo $inGender; ?></p>
 <p>Graduation Year: <?php echo $inGraduationYear; ?></p>
-<p>Attending: <?php echo $inattending; ?></p>
+<p>Interests: <?php echo $inInterests1; ?></p>
+<p>Interests: <?php echo $inInterests2; ?></p>
+<p>Interests: <?php echo $inInterests3; ?></p>
+<p>Interests: <?php echo $inInterests4; ?></p>
+
 
 
 </body>
