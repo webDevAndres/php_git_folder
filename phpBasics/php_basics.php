@@ -21,7 +21,7 @@
         <p>Create the following variables: number1, number2 and total. Assign a value to them.</p2>
         <?php $number1 = 1;
               $number2 = 2;
-              $total   = 3;
+              $total   = $number1 + $number2;;
         ?>
 
         <p>Display the value of each variable and the total variable when you add them together.</p>
