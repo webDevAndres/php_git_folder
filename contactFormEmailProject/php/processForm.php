@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  $emailStatus = $contactEmail->sendMail();                     //create and send email to customer
  $emailStatus2 = $contactEmail->receiveMail();                   //send a copy to sender
 
-
+the
 }
 
 ?>
