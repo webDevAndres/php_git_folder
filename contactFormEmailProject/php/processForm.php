@@ -6,88 +6,22 @@ $inName = $inEmail = $inContactOption = $inComplimentaryUpgrade = $inRequestVale
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (empty($_POST["name"])) {
-    $nameErr = "Name is required";
-  }
+  //get the name value pairs from the $_POST variabe into PHP variables
+ $inName = $_POST["name"];                                           //get the value in the first name field
+ $inEmail = $_POST["email"];                                        //get the value in the email field
+ $inContactOption = $_POST["contactOption"];                       // get the value in reason for contact
+ $inComplimentaryUpgrade = $_POST["complimentaryUpgrade"];        //get checkbox1 value
+ $inRequestValet = $_POST["requestValet"];                       //get checkbox2 value
+ $inMessage = $_POST["message"];                                //get the value in message
 
-  else {
-    $inName = test_input($_POST["name"]);
-    //check if the name only contains letters and whitespace
-    if(!preg_match("/^[a-zA-Z ]*$/",$inName)) {
-      $nameErr = "Only letters and white space allowed";
-    }
-  }
-
-  if(empty($_POST["email"])) {
-    $emailErr = "Email is required";
-  }
-  else {
-    $inEmail = test_input($_POST["email"]);
-    //check to see if email is well formatted
-    if(!filter_var($inEmail, FILTER_VALIDATE_EMAIL)) {
-      $emailErr = "Invalid email format";
-    }
-  }
-
-  if (empty($_POST["contactOption"])) {
-    $contactOptionErr = "Please choose one";
-  }
-  else {
-    $inContactOption = test_input($_POST["contactOption"]);
-  }
-
-  if (empty($_POST["complimentaryUpgrade"])) {
-    $inComplimentaryUpgrade = "";
-  }
-  else {
-    $inComplimentaryUpgrade = test_input($_POST["complimentaryUpgrade"]);
-  }
-
-  if (empty($_POST["requestValet"])) {
-    $inRequestValet = "";
-  }
-  else {
-    $inRequestValet = test_input($_POST["requestValet"]);
-  }
-
-  if (empty($_POST["message"])) {
-    $inMessage = "";
-  } else {
-    $comment = test_input($_POST["message"]);
-  }
-
-
-  function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-  }
-
-
-
-
+ $contactEmail = new Email(""); //instantiate
+ $contactEmail->setRecipient($inEmail);                            //person filling out the form
+ $contactEmail->setSender("contact@andresmonline.com");           //the email that is sending the form
+ $contactEmail->setSubject("We have received your message.");
+ $contactEmail->setMessage("Thank you for your form submission one of our representatives will get back to you.\nName: " . $inName . "\nEmail: " . $inEmail . "\nReason for contact: " . $inContactOption . "\nComplimentary upgrade: " . $inComplimentaryUpgrade . "\nRequest valet: " . $inRequestValet . "\nMessage: " . $inMessage);
+ $emailStatus = $contactEmail->sendMail();                     //create and send email to customer
+ $emailStatus2 = $contactEmail->receiveMail();                   //send a copy to sender
 }
-
-// //get the name value pairs from the $_POST variabe into PHP variables
-// $inName = $_POST["name"];                                           //get the value in the first name field
-// $inEmail = $_POST["email"];                                        //get the value in the email field
-// $inContactOption = $_POST["contactOption"];                       // get the value in reason for contact
-// $inComplimentaryUpgrade = $_POST["complimentaryUpgrade"];        //get checkbox1 value
-// $inRequestValet = $_POST["requestValet"];                       //get checkbox2 value
-// $inMessage = $_POST["message"];                                //get the value in message
-
-
-
-
-
-// $contactEmail = new Email(""); //instantiate
-// $contactEmail->setRecipient($inEmail);                            //person filling out the form
-// $contactEmail->setSender("contact@andresmonline.com");           //the email that is sending the form
-// $contactEmail->setSubject("We have received your message.");
-// $contactEmail->setMessage("Thank you for your form submission one of our representatives will get back to you.\nName: " . $inName . "\nEmail: " . $inEmail . "\nReason for contact: " . $inContactOption . "\nComplimentary upgrade: " . $inComplimentaryUpgrade . "\nRequest valet: " . $inRequestValet . "\nMessage: " . $inMessage);
-// $emailStatus = $contactEmail->sendMail();                     //create and send email to customer
-// $emailStatus2 = $contactEmail->receiveMail();                   //send a copy to sender
 
 ?>
 
