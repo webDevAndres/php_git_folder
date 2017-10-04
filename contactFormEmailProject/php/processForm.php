@@ -2,26 +2,104 @@
 include 'Email.php';
 
 //define variables and set to empty values
+$inNameErr = $inEmailErr = $inContactOptionErr = $inComplimentaryUpgrade = $inRequestValet = $inMessageErr = "";
 $inName = $inEmail = $inContactOption = $inComplimentaryUpgrade = $inRequestValet = $inMessage = "";
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  //get the name value pairs from the $_POST variabe into PHP variables
- $inName = $_POST["name"];                                           //get the value in the first name field
- $inEmail = $_POST["email"];                                        //get the value in the email field
- $inContactOption = $_POST["contactOption"];                       // get the value in reason for contact
- $inComplimentaryUpgrade = $_POST["complimentaryUpgrade"];        //get checkbox1 value
- $inRequestValet = $_POST["requestValet"];                       //get checkbox2 value
- $inMessage = $_POST["message"];                                //get the value in message
 
- $contactEmail = new Email(""); //instantiate
- $contactEmail->setRecipient($inEmail);                            //person filling out the form
- $contactEmail->setSender("contact@andresmonline.com");           //the email that is sending the form
- $contactEmail->setSubject("We have received your message.");
- $contactEmail->setMessage("Thank you for your form submission one of our representatives will get back to you.\nName: " . $inName . "\nEmail: " . $inEmail . "\nReason for contact: " . $inContactOption . "\nComplimentary upgrade: " . $inComplimentaryUpgrade . "\nRequest valet: " . $inRequestValet . "\nMessage: " . $inMessage);
- $emailStatus = $contactEmail->sendMail();                     //create and send email to customer
- $emailStatus2 = $contactEmail->receiveMail();                   //send a copy to sender
+//set form to false
+$validForm = false;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if (empty($_POST["name"])) {
+    $inNameErr = "Name is required";
+    $validForm = false;
+  }
+  else {
+    $inName = test_input($_POST["name"]);
+    //check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$inName)) {
+      $inNameErr = "Only lettes and white space allowed";
+    }
+  }
+
+  if (empty($_POST["email"])) {
+    $inEmailErr = "Email is required";
+    $validForm = false;
+  }
+  else {
+    $inEmail = test_input($_POST["email"]);
+    //check to see if e-mail address is well formed
+    if (!filter_var($inEmail, FILTER_VALIDATE_EMAIL)) {
+      $inEmailErr = "Invalid email format";
+     
+    }
+  }
+
+  if ($_POST["contactOption"] == "Please Select an Option"){
+    $inContactOptionErr = "Please choose one option from the drop down";
+    $validForm = false;
+
+  }
+  else {
+    $inContactOption = $_POST["contactOption"];
+    
+  }
+
+  if (empty($_POST["message"])) {
+    $inMessageErr = "Must be filled";
+    $validForm = false;
+  }
+  else {
+    $inMessage = test_input($_POST["message"]);
+  }
+
+  if (isset($_POST["complimentaryUpgrade"])) {
+    $inComplimentaryUpgrade = $_POST["complimentaryUpgrade"];
 }
+
+if (isset($_POST["requestValet"])) {
+  $inRequestValet = $_POST["requestValet"];
+}
+
+
+}
+ 
+  function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+
+  $validForm = true;
+
+if ($validForm) {
+
+//put in an if statement after form has been validated
+$contactEmail = new Email(""); //instantiate
+$contactEmail->setRecipient($inEmail);                            //person filling out the form
+$contactEmail->setSender("contact@andresmonline.com");           //the email that is sending the form
+$contactEmail->setSubject("We have received your message.");
+  $contactEmail->setMessage("Thank you for your form submission one of our representatives will get back to you. Below is a copy of your message.\nName: " . $inName . "\nEmail: " . $inEmail . "\nReason for contact: " . $inContactOption . "\nComplimentary upgrade: " . $inComplimentaryUpgrade . "\nRequest valet: " . $inRequestValet . "\nMessage: " . $inMessage);
+$emailStatus = $contactEmail->sendCustomerMail();                     //create and send email to customer
+
+
+
+$clientEmail = new Email(""); //instantiate
+$clientEmail->setRecipient("amacias@dmacc.edu");                            //person filling out the form
+$clientEmail->setSender($inEmail);           //the email that is sending the form
+$clientEmail->setSubject("New form Submission");
+$clientEmail->setMessage("Customer inquiry.\nName: " . $inName . "\nEmail: " . $inEmail . "\nReason for contact: " . $inContactOption . "\nComplimentary upgrade: " . $inComplimentaryUpgrade . "\nRequest valet: " . $inRequestValet . "\nMessage: " . $inMessage);
+$clientEmail->sendClientMail();                     //create and send email to client
+
+}
+else {
+ $validForm = false;
+}
+
+
 
 ?>
 
@@ -84,60 +162,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="col-m-5 col-4">
   <h3>
     
-<?php  if ($emailStatus && $emailStatus2) {
-        echo "<h3>Thank you for your submission</h3>";
+<?php  if ($emailStatus) {
+        echo "<h3 class='successMessage'>Thank you for your submission</h3>";
     }
     else {
-        echo "<h3>Sorry Error try again later</h3>";
+        echo "<h3 class='messageFailed'>Sorry Error try again later</h3>";
     }
     
  ?>
  </h3>
- <form name="form1" method="post" action="php/processForm.php">
-        <fieldset>
-          <p>
-            <label for="name">Name:</label>
-          <input type="text" name="name" id="name">
-          </p>
-
-          <p>
-            <label for="email">Email:</label>
-            <input type="text" name="email" id="email">
-          </p>
-
-
-          <p>
-            <label for="contactOption">Reason for contacting:</label>
-          <select name="contactOption" id="contactOption">
-            <option value="" selected>Please Select a Reason</option>
-            <option value="Booking">Booking</option>
-            <option value="Events Problem">Events Problem</option>
-            <option value="Billing Question">Billing Question</option>
-            <option value="Request Service">Request service</option>
-            <option value="Other">Other</option>
-          </select>
-          </p>
-          <p>
-          <label for="message" class="messageAlign">Message:</label>
-          <textarea name="message" id="message" cols="45" rows="5"></textarea>
-          </p>
-
-          <p class="checkboxFormat">
-              Request an upgrade?
-          <input type="checkbox" name="complimentaryUpgrade" id="checkbox1" value="Requested"> </p>
-
-          <p class="checkboxFormat">
-              Request valet services?
-          <input type="checkbox" name="requestValet" id="checkbox2" value="Requested">
-        </p>
-          
-
-          <p>
-            <input type="submit" name="submit" id="sendForm" value="Submit">
-            <input type="reset" name="reset" id="resetForm" value="Reset">
-          </p>
-        </fieldset>
-        </form>
+  
+ 
       
   </div> <!-- end form column-->
 
