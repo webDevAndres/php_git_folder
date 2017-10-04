@@ -94,6 +94,16 @@ form textarea {
     font-size: .8em;
 }
 
+.successMessage {
+    background-color: green;
+    color:white;
+}
+
+.messageFailed {
+    background-color:red;
+    color:white;
+}
+
 /**********
  end form
  **********/
