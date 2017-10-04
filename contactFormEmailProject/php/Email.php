@@ -54,7 +54,7 @@ class Email {
     }
     
 
-    public function sendMail() {
+    public function sendCustomerMail() {
     
         $to = $this->getRecipient();
         $subject = $this->getSubject();
@@ -63,14 +63,16 @@ class Email {
         return mail($to,$subject,$messageTxt,$headers);
     }
 
-    public function receiveMail() {
+    public function sendClientMail() {
         
-            $to = "amacias@dmacc.edu";
-            $subject = "New Form Submission";
+            $to = $this->getRecipient();
+            $subject = $this->getSubject();
             $messageTxt = wordwrap($this->getMessage(),65,"\n",FALSE);
             $headers = 'From: ' . $this->getSender();
             return mail($to,$subject,$messageTxt,$headers);
         }
+
+
 }
 
 ?>
