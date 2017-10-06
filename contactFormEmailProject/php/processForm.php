@@ -2,44 +2,50 @@
 include 'Email.php';
 
 //define variables and set to empty values
-$inNameErr = $inEmailErr = $inContactOptionErr = $inComplimentaryUpgrade = $inRequestValet = $inMessageErr = "";
+$inNameErr = $inEmailErr = $inMessageErr = "";
 $inName = $inEmail = $inContactOption = $inComplimentaryUpgrade = $inRequestValet = $inMessage = "";
 
 
 
-//set form to false
-$validForm = false;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$validForm = true;
+
+if (isset($_POST['submit'])) {
 
   if (empty($_POST["name"])) {
     $inNameErr = "Name is required";
-    $validForm = false;
+    $validForm=false;
+    
   }
   else {
     $inName = test_input($_POST["name"]);
     //check if name only contains letters and whitespace
     if (!preg_match("/^[a-zA-Z ]*$/",$inName)) {
-      $inNameErr = "Only lettes and white space allowed";
+      $inNameErr = "Only letters and white space allowed";
+      $validForm = false;
     }
+   
   }
 
   if (empty($_POST["email"])) {
     $inEmailErr = "Email is required";
     $validForm = false;
+    
   }
   else {
     $inEmail = test_input($_POST["email"]);
     //check to see if e-mail address is well formed
     if (!filter_var($inEmail, FILTER_VALIDATE_EMAIL)) {
       $inEmailErr = "Invalid email format";
+      $validForm = false;
+      
      
     }
   }
 
   if ($_POST["contactOption"] == "Please Select an Option"){
     $inContactOptionErr = "Please choose one option from the drop down";
-    $validForm = false;
+    
 
   }
   else {
@@ -63,21 +69,10 @@ if (isset($_POST["requestValet"])) {
   $inRequestValet = $_POST["requestValet"];
 }
 
-
 }
- 
-  function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-  }
 
-  $validForm = true;
-
-if ($validForm) {
-
-//put in an if statement after form has been validated
+if ($validForm == true) {
+  //put in an if statement after form has been validated
 $contactEmail = new Email(""); //instantiate
 $contactEmail->setRecipient($inEmail);                            //person filling out the form
 $contactEmail->setSender("contact@andresmonline.com");           //the email that is sending the form
@@ -94,10 +89,17 @@ $clientEmail->setSubject("New form Submission");
 $clientEmail->setMessage("Customer inquiry.\nName: " . $inName . "\nEmail: " . $inEmail . "\nReason for contact: " . $inContactOption . "\nComplimentary upgrade: " . $inComplimentaryUpgrade . "\nRequest valet: " . $inRequestValet . "\nMessage: " . $inMessage);
 $clientEmail->sendClientMail();                     //create and send email to client
 
+ }
+
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
-else {
- $validForm = false;
-}
+
+
 
 
 
@@ -160,6 +162,7 @@ else {
      
 <div class="row">
   <div class="col-m-5 col-4">
+ 
   <h3>
     
 <?php  if ($emailStatus) {
