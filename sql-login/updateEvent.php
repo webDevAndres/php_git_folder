@@ -218,12 +218,12 @@ else
 		   <span class="errormsg"><?php echo $event_presenter_error; ?></span>
   </p>
   <p>Event Date: 
-    <input type="text" name="event_date" id="event_date" 
+    <input type="date" name="event_date" id="event_date" 
         value="<?php echo $event['event_date']; ?>" />
 		<span class="errormsg"><?php echo $event_date_error; ?></span>
   </p>
   <p>Event Time: 
-    <input type="text" name="event_time" id="event_time" 
+    <input type="time" name="event_time" id="event_time" 
     	value="<?php echo $event['event_time']; ?>" />
 		<span class="errormsg"><?php echo $event_time_error; ?></span>
   </p>

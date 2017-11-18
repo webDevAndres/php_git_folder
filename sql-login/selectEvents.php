@@ -20,12 +20,11 @@ if(!isset($event_id)) {
 
 
 //get all events
-$queryAllEvents = 'SELECT * FROM wdv341_event ORDER BY event_id';
+$queryAllEvents = 'SELECT event_id,event_name,event_description,event_presenter,event_date, event_time FROM wdv341_event ORDER BY event_id';
 $stmt2 = $conn->prepare($queryAllEvents);
 $stmt2->execute();
 $events = $stmt2->fetchAll();
 $stmt2->closeCursor();
-
 $message = "<h1>The following has been found: " .$stmt2->RowCount() . " " . "rows</h1>";
   $message .= "<p>Return to <a href='login.php'>Login</a>.</p>";
 } //end valid user check
@@ -83,11 +82,12 @@ text-align: center;
 
     <?php foreach ($events as $event) {?>
 <tr>
+
 <td><?php echo $event['event_id']; ?></td>
 <td><?php echo $event['event_name']; ?></td>
 <td><?php echo $event['event_description']; ?></td>
 <td><?php echo $event['event_presenter']; ?></td>
-<td><?php echo $event['event_date']; ?></td>
+<td><?php echo $event['event_date'];?></td>
 <td><?php echo $event['event_time']; ?></td>
 <td><form action="updateEvent.php" method="post">
 <input type="hidden" name="event_id" value="<?php echo $event['event_id'];?>">
