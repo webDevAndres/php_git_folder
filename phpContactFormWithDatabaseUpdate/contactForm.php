@@ -362,11 +362,11 @@ if ($validForm) {
                 echo "checked = 'checked'";
 } ?>></p>
 
-
- <input type="hidden" name="contact_assigned_rep" value="TBD">
-  <!-- do not fill -->
-  <input type="hidden" name="contact_followup_date" value="TBD">
-  <input type="hidden" name="contact_followup_result" value="TBD">
+    <input type="hidden" name="contact_date" value="TBD">
+    <input type="hidden" name="contact_time" value="TBD">
+    <input type="hidden" name="contact_assigned_rep" value="TBD">
+    <input type="hidden" name="contact_followup_date" value="TBD">
+    <input type="hidden" name="contact_followup_result" value="TBD">
             <!-- do not fill -->
           <input class="hideRoboTest" type="text" name="roboTest">
 
