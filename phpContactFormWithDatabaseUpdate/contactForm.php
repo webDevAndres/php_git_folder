@@ -159,6 +159,7 @@ if (isset($_POST['submit'])) {
                $conn->commit();
         
             $message = "Success.";
+        
         } catch (PDOException $e) {
             $message = "There has been a problem. The system administrator has been contacted. Please try again later.";
         
@@ -167,7 +168,7 @@ if (isset($_POST['submit'])) {
                 
                     //Clean up any variables or connections that have been left hanging by this error.
         }
-                echo $message;
+                
                 $conn = null;
     } else {
         echo "<script>alert('Failed to insert to database.')</script>";
@@ -278,6 +279,7 @@ if ($validForm) {
 <?php
 if ($validForm) {
 ?>
+       <?php echo "<h3 class='successMessage'>$message</h3>";?>
         <h3 class='successMessage'>Thank you for your submission</h3>
         <form name="form1">
         <fieldset>
