@@ -63,7 +63,7 @@ $stmt4Average->execute();
 $cust_pref4Average = $stmt4Average->fetchAll();
 $stmt4Average->closeCursor();
 $message = "<h1>The following has been found: " .$stmt2->RowCount() . " " . "rows</h1>";
-  $message .= "<p>Return to <a href='login.php'>Login</a>.</p>";
+
 
 
 ?>
@@ -78,9 +78,8 @@ $message = "<h1>The following has been found: " .$stmt2->RowCount() . " " . "row
 
     <style>
 .container {
-margin-left: 6.5%;
-
-
+width: 100%;
+text-align: center;
 }
     .tableFormat {
        float:left;
@@ -124,7 +123,7 @@ margin-left: 6.5%;
     <?php } ?>
     <?php foreach ($cust_pref1Average as $pref) {?>
 <td><?php echo 'Average Rating' ?></td>
-<td><?php echo $pref['averageRating'] ?></td>
+<td><?php echo round($pref['averageRating'],2); ?></td>
 
     <?php } ?>
     </table>
@@ -141,7 +140,7 @@ margin-left: 6.5%;
     <?php } ?>
     <?php foreach ($cust_pref2Average as $pref) {?>
 <td><?php echo 'Average Rating' ?></td>
-<td><?php echo $pref['averageRating'] ?></td>
+<td><?php echo round($pref['averageRating'],2); ?></td>
 
     <?php } ?>
     </table>
@@ -158,7 +157,7 @@ margin-left: 6.5%;
     <?php } ?>
     <?php foreach ($cust_pref3Average as $pref) {?>
 <td><?php echo 'Average Rating' ?></td>
-<td><?php echo $pref['averageRating'] ?></td>
+<td><?php echo round($pref['averageRating'],2); ?></td>
 
     <?php } ?>
     </table>
@@ -170,29 +169,16 @@ margin-left: 6.5%;
     <?php foreach ($cust_pref4 as $pref) {?>
 <tr>
 <td ><?php echo $pref['cust_email']; ?></td>
-<td><?php echo $pref['cust_pref4']; ?></td>
+<td><?php echo round($pref['cust_pref4'],2); ?></td>
 </tr>
     <?php } ?>
     <?php foreach ($cust_pref4Average as $pref) {?>
 <td><?php echo 'Average Rating' ?></td>
-<td><?php echo $pref['averageRating'] ?></td>
+<td><?php echo round($pref['averageRating'],2); ?></td>
 
     <?php } ?>
 </table>
     </section>
     </div>
-
-
-
-
-    
-
-    
-   
-   
-    <script
-  src="http://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-  crossorigin="anonymous"></script>
 </body>
 </html>
