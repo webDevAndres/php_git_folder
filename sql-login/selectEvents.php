@@ -20,11 +20,7 @@ if(!isset($event_id)) {
 
 
 //get all events
-<<<<<<< HEAD
 $queryAllEvents = 'SELECT event_id,event_name,event_description,event_presenter,DATE_FORMAT(event_date, "%m-%d-%Y") AS formattedDate, TIME_FORMAT(event_time,"%h:%i %p") AS event_time FROM wdv341_event ORDER BY event_id';
-=======
-$queryAllEvents = 'SELECT event_id,event_name,event_description,event_presenter,event_date, event_time FROM wdv341_event ORDER BY event_id';
->>>>>>> 964192cf8b8dc61ed0b08e8c8fde18e95acedf10
 $stmt2 = $conn->prepare($queryAllEvents);
 $stmt2->execute();
 $events = $stmt2->fetchAll();
@@ -91,11 +87,7 @@ text-align: center;
 <td><?php echo $event['event_name']; ?></td>
 <td><?php echo $event['event_description']; ?></td>
 <td><?php echo $event['event_presenter']; ?></td>
-<<<<<<< HEAD
 <td><?php echo $event['formattedDate'];?></td>
-=======
-<td><?php echo $event['event_date'];?></td>
->>>>>>> 964192cf8b8dc61ed0b08e8c8fde18e95acedf10
 <td><?php echo $event['event_time']; ?></td>
 <td><form action="updateEvent.php" method="post">
 <input type="hidden" name="event_id" value="<?php echo $event['event_id'];?>">
