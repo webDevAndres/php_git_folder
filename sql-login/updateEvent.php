@@ -39,11 +39,11 @@ if($_SESSION['validUser'] =="yes") {
 	  } else {
 			$event_name_error = "";
 			//check if name only contains letters and whitespace
-		  if (!preg_match("/^[a-zA-Z0-9 ]*$/", $event_name)) {
+		  if (!preg_match("/^[a-zA-Z0-9. ]*$/", $event_name)) {
 			  $event_name_error = "Only letters and white space allowed";
 			  $validForm = false;
 			  // cannot be all spaces
-		  } elseif (!preg_match("/^[^-\s][a-zA-Z0-9 \s-]*$/", $event_name)) {
+		  } elseif (!preg_match("/^[^-\s][a-zA-Z0-9. \s-]*$/", $event_name)) {
 			  $event_name_error = "Cannot be all spaces";
 			  $validForm = false;
 		  }
@@ -59,11 +59,11 @@ if($_SESSION['validUser'] =="yes") {
 	  } else {
 			$event_description_error = "";
 			//check if name only contains letters and whitespace
-		  if (!preg_match("/^[a-zA-Z0-9 ]*$/", $event_description)) {
+		  if (!preg_match("/^[a-zA-Z0-9. ]*$/", $event_description)) {
 			  $event_description_error = "Only letters and white space allowed";
 			  $validForm = false;
 			  // cannot be all spaces
-		  } elseif (!preg_match("/^[^-\s][a-zA-Z0-9 \s-]*$/", $event_description)) {
+		  } elseif (!preg_match("/^[^-\s][a-zA-Z0-9. \s-]*$/", $event_description)) {
 			  $event_description_error = "Cannot be all spaces";
 			  $validForm = false;
 		  }
@@ -78,11 +78,11 @@ if($_SESSION['validUser'] =="yes") {
 	  } else {
 			$event_presenter_error = "";
 			//check if name only contains letters and whitespace
-		  if (!preg_match("/^[a-zA-Z0-9 ]*$/", $event_presenter)) {
+		  if (!preg_match("/^[a-zA-Z0-9. ]*$/", $event_presenter)) {
 			  $event_presenter_error = "Only letters and white space allowed";
 			  $validForm = false;
 			  // cannot be all spaces
-		  } elseif (!preg_match("/^[^-\s][a-zA-Z0-9 \s-]*$/", $event_presenter)) {
+		  } elseif (!preg_match("/^[^-\s][a-zA-Z0-9. \s-]*$/", $event_presenter)) {
 			  $event_presenter_error = "Cannot be all spaces";
 			  $validForm = false;
 		  }
@@ -180,9 +180,9 @@ else {
 <body>
 
 <h1>WDV341 Intro PHP</h1>
-<h1>Presenters Admin System Example</h1>
-<h3>UPDATE Form for Changing information on a Presenter</h3>
-<p>This page is called from the presentersSelectView.php page when you click on the Update link of a presenter. That page attaches the presenter_id to the URL of this page making it a GET parameter.</p>
+<h1>Event Admin System Update</h1>
+<h3>UPDATE Form for Changing information on an event</h3>
+<p>This page is called from the selectEvents.php page when you click on the Update button of a presenter. That page attaches the event_id to the URL of this page making it a GET parameter.</p>
 <p>This page uses that information to SELECT the requested record from the database. Then PHP is used to pull the various column values for the record and place them in the form fields as their default values. </p>
 <p>The user/customer can make changes as needed or leave the information as is. When the form is submitted and validated it will update the record in the database.</p>
 <p>Notice that this form uses a hidden field. The value of this hidden field contains the presenter_id. It is passed as one of the form name-value pairs. The submitted page will use that value to determine which record to update on the database.</p>
@@ -198,6 +198,7 @@ if($validForm)
 
 else
 {	//The page needs to display the form and associated data to the user for changes
+	echo '<h3><a href="selectEvents.php">Return to previous Page</a></h3>';
 ?>
 <form id="event_Form" name="event_Form" method="post" action="updateEvent.php">
   <p>Update the following event Information.  Place the new information in the appropriate field(s)</p>
@@ -218,12 +219,12 @@ else
 		   <span class="errormsg"><?php echo $event_presenter_error; ?></span>
   </p>
   <p>Event Date: 
-    <input type="text" name="event_date" id="event_date" 
+    <input type="date" name="event_date" id="event_date" 
         value="<?php echo $event['event_date']; ?>" />
 		<span class="errormsg"><?php echo $event_date_error; ?></span>
   </p>
   <p>Event Time: 
-    <input type="text" name="event_time" id="event_time" 
+    <input type="time" name="event_time" id="event_time" 
     	value="<?php echo $event['event_time']; ?>" />
 		<span class="errormsg"><?php echo $event_time_error; ?></span>
   </p>

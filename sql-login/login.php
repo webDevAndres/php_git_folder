@@ -6,32 +6,32 @@ session_start();
 
 $message = "";
 
-$_SESSION['validUser'] = "no";
 
 //checks if user is valid
 
 if ($_SESSION['validUser'] == "yes") {
+
     // if already signed in.
     $message = "Welcome back!";
   
 } else {
+
     //checks if page was called fom a submitted form
     
     if (isset($_POST['submitLogin'])) {
-      
         //pull username and password from form
         $inUsername = $_POST['loginUsername'];
         $inPassword = $_POST['loginPassword'];
 //connect to database
         include 'connectPDO.php';
 
-$query = "SELECT event_user_name,event_user_password FROM event_user WHERE event_user_name = :event_user_name AND event_user_password = :event_user_password";
+        $query = "SELECT event_user_name,event_user_password FROM event_user WHERE event_user_name = :event_user_name AND event_user_password = :event_user_password";
 
 //prepare the query and bind parameters
-$stmt = $conn->prepare($query);
-$stmt->bindValue(':event_user_name',$inUsername, PDO::PARAM_STR);
-$stmt->bindValue(':event_user_password', $inPassword, PDO::PARAM_STR);
-$stmt->execute();
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(':event_user_name', $inUsername, PDO::PARAM_STR);
+        $stmt->bindValue(':event_user_password', $inPassword, PDO::PARAM_STR);
+        $stmt->execute();
 
     //If this is a valid user there should be ONE row only
         if ($stmt->rowCount() == 1) {
@@ -48,11 +48,7 @@ $stmt->execute();
             $message = "Sorry, there was a problem with your username or password. Please try again.";
         }
         $conn = null;
-
-
     } //end if the form was submitted
-
-
 }//end else valid user
 
 ?>
@@ -110,18 +106,16 @@ text-align: center;
 <div class="row">
     <div class="col-sm-12">
             <?php
-            if($_SESSION['validUser'] == "yes") 
-            {
+            if ($_SESSION['validUser'] == "yes") {
             ?>
             <h3>Event Administrator Options</h3>
                     <p><a href="eventsForm.php">Input new events</a></p>
                     <p><a href="selectEvents.php">List of events</a></p>
-                    <p><a href="logout.php">Logout of Admin System</a></p>	
+                    <p><a href="logout.php">Logout of Admin System</a></p>  
             <?php
-            }
-            else 
-            {
+            } else {
                 ?>
+                
                 <h2>Please login to the Administrator System</h2>
                             <form method="post" name="loginForm" action="login.php" >
                               <p>Username: <input name="loginUsername" type="text" /></p>

@@ -98,7 +98,7 @@ if($_SESSION['validUser'] =="yes") {
 
                         //commit the transaction
                         $conn->commit();
-                        $message = "New records created successfully <a href=login.php> RETURN TO LOGIN PAGE</a>";
+                        $message = "New records created successfully";
                         
                       
                     }
@@ -133,7 +133,11 @@ else {
 <head>
 	<title>Event Form Add Event</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-   
+    
+
+
+
+
    <style>
    body {
        background-color: black;
@@ -146,6 +150,7 @@ border: 2px solid white;
    }
 
    </style>
+
    
 </head>
 <body>
@@ -155,6 +160,7 @@ border: 2px solid white;
 <div class="row">
 <div class="col-sm-12">
 <?php echo $message ?>
+<?php  echo "<a href=login.php> RETURN TO LOGIN PAGE</a>"; ?>
 	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <fieldset>
   
@@ -165,11 +171,11 @@ border: 2px solid white;
         <label>Event Presenter:</label><br>
         <input type="text" name="event_presenter" maxlength="25"><span class="error" name="event_presenter_error"><?php echo $event_presenter_error; ?></span><br>
         
-        <label>Event Date:</label> <br>
-        <input type="text" name="event_date" id="datepicker"><span class="error" name="event_date_error"><?php echo $event_date_error; ?></span><br>
+        <label>Event Dates:</label> <br>
+        <input type="date" name="event_date" id="datepicker"><span class="error" name="event_date_error"><?php echo $event_date_error; ?></span><br>
         
         <label>Event Time:</label> <br>
-        <input type="timepicker" name="event_time"><span class="error" name="event_time_error"><?php echo $event_time_error; ?></span><br>
+        <input type="time" name="event_time"><span class="error" name="event_time_error"><?php echo $event_time_error; ?></span><br>
         
         <label>Event Description:</label><br>
         <textarea cols="50" rows="4" name="event_description" maxlength="500"></textarea><span class="error" name="event_description_error"><?php echo $event_description_error; ?></span><br>
@@ -190,5 +196,4 @@ border: 2px solid white;
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-</body>
 </html>
