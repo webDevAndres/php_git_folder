@@ -3,12 +3,12 @@
 		include 'connectPDO.php';
 	
 	//get all events
-	$queryAllEvents = 'SELECT *,DATE_FORMAT(event_day,"%m-%d-%Y") AS formattedDate FROM wdv341_events';
+	$queryAllEvents = 'SELECT *,DATE_FORMAT(event_day,"%m-%d-%Y") AS formattedDate, Time_format(event_time, "%h:%i %p") AS event_time FROM wdv341_events';
 	$stmt = $conn->prepare($queryAllEvents);
 	$stmt->execute();
 	$events = $stmt->fetchAll();
 	$stmt->closeCursor();
-	$message = "<h1>The following has been found: " .$stmt->RowCount() . " " . "rows</h1>";
+	$message = "<h1>The following has been found: " .$stmt->RowCount() . " " . "events are available</h1>";
 
 	
 	
@@ -45,7 +45,7 @@
 <div class="header">
 <h1>WDV341 Intro PHP</h1>
     <h2>Example Code - Display Events as formatted output blocks</h2>   
-    <h3> <?php echo $message; ?> Events are available today.</h3>
+    <h3> <?php echo $message; ?></h3>
 </div>
     
 
